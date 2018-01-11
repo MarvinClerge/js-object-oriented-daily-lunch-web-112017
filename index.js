@@ -14,7 +14,10 @@ function createEmployer() {
     }
 
     employees() {
-      //return list of customers
+      let theThis = this
+      return store.customers.filter(function(c) {
+        return c.employerId === theThis.id
+      })
     }
 
     deliveries() {
@@ -50,16 +53,60 @@ function createCustomer() {
       store.customers.push(this);
     }
 
-    meals() {
-      //return instance
-    }
+    meals() {}
+      // let theThis = this
+      // let newArr = []
+      //
+      //
+      // let mIds = this.deliveries().map(function(x) {
+      //   console.log(x)
+      //   return x.mealId
+      // })
+      //
+      // for (const meal of store.meals) {
+      //   for (const mid in mIds) {
+      //     meal.id === mid
+      //   }}['name']
+      // }
+
+
+      // return store.meals.find(function(m) {
+      //     m.id === meal.
+      //   })
+      // }
+
+      // let hi = this.deliveries().map(function(x) {
+      //   x = x.mealId
+      // });
+      // console.log(hi);
+      // store.deliveries.forEach(function(del) {
+      //   if (del.customerId == theThis.id) {
+      //     newArr.push(del.mealId)
+      //   }
+      // })
+
+
+      // return newArr
+
+      // let theThis = this
+      // return store.deliveries.filter(function(d) {
+      // })
+
+
 
     deliveries() {
-      //return instance
+      let theThis = this
+      return store.deliveries.filter(function(d) {
+        return d.customerId === theThis.id
+      })
     }
 
-    totalSpent() {
 
+
+    totalSpent() {
+      return this.meals().reduce(function(total, current) {
+        return total + current.price
+      }, 0)
     }
 
   }
@@ -82,12 +129,9 @@ function createMeal() {
     }
 
     static byPrice() {
-      console.log(store.meals);
-      console.error('-')
       return store.meals.sort(function(a,b) {
         return a.price < b.price
       })
-      //return meals sorted by price
     }
   }
 }
@@ -111,6 +155,25 @@ function createDelivery() {
 
       store.deliveries.push(this);
     }
+
+    customer() {
+      let theThis = this
+      return store.customers.filter(function(c) {
+        return c.id === theThis.customerId
+      })[0]
+    }
+
+    meal() {
+      if (delivery) {
+        this.deliveryId - delivery.id
+      }
+      let theThis = this
+
+      return store.meals.filter(function(c) {
+        return c.id === theThis.mealId
+      })[0]
+    }
+
   }
 }
 const Delivery = createDelivery();
